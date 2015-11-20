@@ -55,6 +55,7 @@ public class AlertDialogFragment extends DialogFragment {
             .setMessage(message)
             .setPositiveButton(getString(R.string.dialog_ok), positiveListener)
             .setNegativeButton(getString(R.string.dialog_cancel), negativeListener)
+            .setNegativeButton(null, null)
             .create();
     }
 

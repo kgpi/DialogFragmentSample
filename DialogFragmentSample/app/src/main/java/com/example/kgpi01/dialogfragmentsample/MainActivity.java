@@ -31,4 +31,14 @@ public class MainActivity extends AppCompatActivity {
         );
         fragment.show(getFragmentManager(), "alert_dialog");
     }
+
+    public void onClickOkOnlyDialogFragmentButton(View v) {
+        OkOnlyDialogFragment fragment = OkOnlyDialogFragment.newInstance("Title", "Message", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "OK", Toast.LENGTH_SHORT).show();
+            }
+        });
+        fragment.show(getFragmentManager(), "alert_dialog");
+    }
 }
