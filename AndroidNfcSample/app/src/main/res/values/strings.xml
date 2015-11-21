@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AndroidNfcSample</string>
+    <string name="title_activity_pending_intent">PendingIntentActivity</string>
+    <string name="title_activity_callback">CallbackActivity</string>
+</resources>

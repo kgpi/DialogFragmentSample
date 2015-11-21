@@ -1,9 +1,6 @@
 package com.example.kgpi01.androidnfcsample;
 
 import android.content.Intent;
-import android.nfc.FormatException;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
@@ -11,7 +8,6 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.nfc.tech.NfcA;
-import android.nfc.tech.NfcF;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,17 +16,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-
 public class PendingIntentActivity extends AppCompatActivity {
 
     private String DebugTag = "NFC";
-    private NfcByPendingIntentHelper nfcHealper;
+    private NfcByPendingIntentHelper nfcHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +37,19 @@ public class PendingIntentActivity extends AppCompatActivity {
             }
         });
 
-        nfcHealper = new NfcByPendingIntentHelper(this, DebugTag);
+        nfcHelper = new NfcByPendingIntentHelper(this, DebugTag);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        nfcHealper.start();
+        nfcHelper.start();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        nfcHealper.stop();
+        nfcHelper.stop();
     }
 
     /**
@@ -108,16 +97,19 @@ public class PendingIntentActivity extends AppCompatActivity {
             return;
         }
 
-        NfcHelper nfcHelper = new NfcHelper(this);
+        NfcHelper nfcHelper = new NfcHelper();
 
-        nfcHelper.readNdef(Ndef.get(tag));
-        nfcHelper.writeNdef("free", Ndef.get(tag));
-        nfcHelper.readNdef(Ndef.get(tag));
+        String text = nfcHelper.readFirstRecord(tag);
+        writeLog("結果：" + text);
+
+        //String text = nfcHelper.readFirstRecord(tag);
+        //writeLog(text);
+
+        //nfcHelper.readNdef(Ndef.get(tag));
+        //nfcHelper.writeNdef("free", Ndef.get(tag));
+        //nfcHelper.readNdef(Ndef.get(tag));
 
     }
-
-
-
 
     private void writeLog(String s) {
         Log.d(DebugTag, s);
